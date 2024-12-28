@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище RieltorModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Договора">
+          <Key>
+            <PropertyRef Name="Код" />
+          </Key>
+          <Property Name="Код" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="НомерДоговора" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ДатаЗаключения" Type="date" Nullable="false" />
+          <Property Name="Статус" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="КлиентID" Type="int" />
+          <Property Name="СоздательID" Type="int" />
+        </EntityType>
+        <EntityType Name="Клиенты">
+          <Key>
+            <PropertyRef Name="Код" />
+          </Key>
+          <Property Name="Код" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ФИО" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="НомерТелефона" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Пользователи">
+          <Key>
+            <PropertyRef Name="Код" />
+          </Key>
+          <Property Name="Код" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Логин" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Пароль" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Роль" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Договора__Клиент__3D5E1FD2">
+          <End Role="Клиенты" Type="Self.Клиенты" Multiplicity="0..1" />
+          <End Role="Договора" Type="Self.Договора" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Клиенты">
+              <PropertyRef Name="Код" />
+            </Principal>
+            <Dependent Role="Договора">
+              <PropertyRef Name="КлиентID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Договора__Создат__3E52440B">
+          <End Role="Пользователи" Type="Self.Пользователи" Multiplicity="0..1" />
+          <End Role="Договора" Type="Self.Договора" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователи">
+              <PropertyRef Name="Код" />
+            </Principal>
+            <Dependent Role="Договора">
+              <PropertyRef Name="СоздательID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище RieltorModelContainer">
+          <EntitySet Name="Договора" EntityType="Self.Договора" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Клиенты" EntityType="Self.Клиенты" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Пользователи" EntityType="Self.Пользователи" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Договора__Клиент__3D5E1FD2" Association="Self.FK__Договора__Клиент__3D5E1FD2">
+            <End Role="Клиенты" EntitySet="Клиенты" />
+            <End Role="Договора" EntitySet="Договора" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Договора__Создат__3E52440B" Association="Self.FK__Договора__Создат__3E52440B">
+            <End Role="Пользователи" EntitySet="Пользователи" />
+            <End Role="Договора" EntitySet="Договора" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RieltorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Договора">
+          <Key>
+            <PropertyRef Name="Код" />
+          </Key>
+          <Property Name="Код" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="НомерДоговора" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ДатаЗаключения" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Статус" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="КлиентID" Type="Int32" />
+          <Property Name="СоздательID" Type="Int32" />
+          <NavigationProperty Name="Клиенты" Relationship="Self.FK__Договора__Клиент__3D5E1FD2" FromRole="Договора" ToRole="Клиенты" />
+          <NavigationProperty Name="Пользователи" Relationship="Self.FK__Договора__Создат__3E52440B" FromRole="Договора" ToRole="Пользователи" />
+        </EntityType>
+        <EntityType Name="Клиенты">
+          <Key>
+            <PropertyRef Name="Код" />
+          </Key>
+          <Property Name="Код" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ФИО" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="НомерТелефона" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Договора" Relationship="Self.FK__Договора__Клиент__3D5E1FD2" FromRole="Клиенты" ToRole="Договора" />
+        </EntityType>
+        <EntityType Name="Пользователи">
+          <Key>
+            <PropertyRef Name="Код" />
+          </Key>
+          <Property Name="Код" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Логин" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Пароль" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Роль" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Договора" Relationship="Self.FK__Договора__Создат__3E52440B" FromRole="Пользователи" ToRole="Договора" />
+        </EntityType>
+        <Association Name="FK__Договора__Клиент__3D5E1FD2">
+          <End Role="Клиенты" Type="Self.Клиенты" Multiplicity="0..1" />
+          <End Role="Договора" Type="Self.Договора" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Клиенты">
+              <PropertyRef Name="Код" />
+            </Principal>
+            <Dependent Role="Договора">
+              <PropertyRef Name="КлиентID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Договора__Создат__3E52440B">
+          <End Role="Пользователи" Type="Self.Пользователи" Multiplicity="0..1" />
+          <End Role="Договора" Type="Self.Договора" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователи">
+              <PropertyRef Name="Код" />
+            </Principal>
+            <Dependent Role="Договора">
+              <PropertyRef Name="СоздательID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RieltorEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Договора" EntityType="Self.Договора" />
+          <EntitySet Name="Клиенты" EntityType="Self.Клиенты" />
+          <EntitySet Name="Пользователи" EntityType="Self.Пользователи" />
+          <AssociationSet Name="FK__Договора__Клиент__3D5E1FD2" Association="Self.FK__Договора__Клиент__3D5E1FD2">
+            <End Role="Клиенты" EntitySet="Клиенты" />
+            <End Role="Договора" EntitySet="Договора" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Договора__Создат__3E52440B" Association="Self.FK__Договора__Создат__3E52440B">
+            <End Role="Пользователи" EntitySet="Пользователи" />
+            <End Role="Договора" EntitySet="Договора" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище RieltorModelContainer" CdmEntityContainer="RieltorEntities">
+          <EntitySetMapping Name="Договора">
+            <EntityTypeMapping TypeName="RieltorModel.Договора">
+              <MappingFragment StoreEntitySet="Договора">
+                <ScalarProperty Name="Код" ColumnName="Код" />
+                <ScalarProperty Name="НомерДоговора" ColumnName="НомерДоговора" />
+                <ScalarProperty Name="ДатаЗаключения" ColumnName="ДатаЗаключения" />
+                <ScalarProperty Name="Статус" ColumnName="Статус" />
+                <ScalarProperty Name="КлиентID" ColumnName="КлиентID" />
+                <ScalarProperty Name="СоздательID" ColumnName="СоздательID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Клиенты">
+            <EntityTypeMapping TypeName="RieltorModel.Клиенты">
+              <MappingFragment StoreEntitySet="Клиенты">
+                <ScalarProperty Name="Код" ColumnName="Код" />
+                <ScalarProperty Name="ФИО" ColumnName="ФИО" />
+                <ScalarProperty Name="НомерТелефона" ColumnName="НомерТелефона" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Пользователи">
+            <EntityTypeMapping TypeName="RieltorModel.Пользователи">
+              <MappingFragment StoreEntitySet="Пользователи">
+                <ScalarProperty Name="Код" ColumnName="Код" />
+                <ScalarProperty Name="Логин" ColumnName="Логин" />
+                <ScalarProperty Name="Пароль" ColumnName="Пароль" />
+                <ScalarProperty Name="Роль" ColumnName="Роль" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
